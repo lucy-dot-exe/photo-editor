@@ -1,46 +1,49 @@
-# Getting Started with Create React App
+# PhotoEditor
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+A browser-based image editor built with React, TypeScript, and [OpenCV.js](https://docs.opencv.org/4.x/d5/d10/tutorial_js_root.html). Load an image, apply pixel-level transformations, and save the result — all client-side, no server or install required.
 
-## Available Scripts
+**Live demo:** https://luci-dot-exe.github.io/photo-editor/
 
-In the project directory, you can run:
+This project started as coursework for INF01046 – Fundamentos de Processamento de Imagens (UFRGS), implementing classic image-processing operations from scratch on top of OpenCV.js instead of the traditionally-recommended C/C++. Implementation notes and rationale for that choice are in [relatórios/parte 1/relatorio.md](<relatórios/parte 1/relatorio.md>).
 
-### `yarn start`
+## Features
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+- **Load / save images** — read a JPEG (or other browser-supported format) from disk and download the edited result.
+- **Vertical & horizontal mirroring** — flip the image along either axis.
+- **Grayscale conversion** — convert to luminance (`L = 0.299R + 0.587G + 0.114B`).
+- **Shade quantization** — reduce a grayscale image to a chosen number of tonal levels (2–256).
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+## Tech stack
 
-### `yarn test`
+- [React](https://reactjs.org/) + [TypeScript](https://www.typescriptlang.org/), bootstrapped with [Create React App](https://github.com/facebook/create-react-app)
+- [OpenCV.js](https://docs.opencv.org/4.x/d5/d10/tutorial_js_root.html) (via `opencv-ts`) for image I/O and pixel access
+- [Bootstrap](https://getbootstrap.com/) + [Font Awesome](https://fontawesome.com/) for the UI
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+## Getting started
 
-### `yarn build`
+Install dependencies and start the dev server:
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+```bash
+yarn install
+yarn start
+```
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+Open [http://localhost:3000](http://localhost:3000) — the page reloads on edits.
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+### Other scripts
 
-### `yarn eject`
+| Command | Description |
+| --- | --- |
+| `yarn test` | Run the test suite in watch mode |
+| `yarn build` | Build a production bundle to `build/` |
+| `yarn deploy` | Build and publish `build/` to GitHub Pages |
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+## Deployment
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+The app is a static site deployed to GitHub Pages via [`gh-pages`](https://github.com/tschaub/gh-pages):
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+```bash
+yarn deploy
+```
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
+This runs `predeploy` (`yarn build`) automatically, then pushes the `build/` folder to the `gh-pages` branch, publishing to the `homepage` URL configured in `package.json`.
